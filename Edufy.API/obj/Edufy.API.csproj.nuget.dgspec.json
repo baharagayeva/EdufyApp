@@ -1,49 +1,42 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Microsol\\Documents\\Edufy\\Edufy\\Edufy.API\\Edufy.API.csproj": {}
+    "/Users/baharaghayeva/Documents/RiderProjects/EdufyApp/Edufy.API/Edufy.API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Microsol\\Documents\\Edufy\\Edufy\\Edufy.API\\Edufy.API.csproj": {
+    "/Users/baharaghayeva/Documents/RiderProjects/EdufyApp/Edufy.API/Edufy.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Microsol\\Documents\\Edufy\\Edufy\\Edufy.API\\Edufy.API.csproj",
+        "projectUniqueName": "/Users/baharaghayeva/Documents/RiderProjects/EdufyApp/Edufy.API/Edufy.API.csproj",
         "projectName": "Edufy.API",
-        "projectPath": "C:\\Users\\Microsol\\Documents\\Edufy\\Edufy\\Edufy.API\\Edufy.API.csproj",
-        "packagesPath": "C:\\Users\\Microsol\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Microsol\\Documents\\Edufy\\Edufy\\Edufy.API\\obj\\",
+        "projectPath": "/Users/baharaghayeva/Documents/RiderProjects/EdufyApp/Edufy.API/Edufy.API.csproj",
+        "packagesPath": "/Users/baharaghayeva/.nuget/packages/",
+        "outputPath": "/Users/baharaghayeva/Documents/RiderProjects/EdufyApp/Edufy.API/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Microsol\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/baharaghayeva/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net10.0": {
             "targetAlias": "net10.0",
             "projectReferences": {
-              "C:\\Users\\Microsol\\Documents\\Edufy\\Edufy\\Edufy.Application\\Edufy.Application.csproj": {
-                "projectPath": "C:\\Users\\Microsol\\Documents\\Edufy\\Edufy\\Edufy.Application\\Edufy.Application.csproj"
+              "/Users/baharaghayeva/Documents/RiderProjects/EdufyApp/Edufy.Application/Edufy.Application.csproj": {
+                "projectPath": "/Users/baharaghayeva/Documents/RiderProjects/EdufyApp/Edufy.Application/Edufy.Application.csproj"
               },
-              "C:\\Users\\Microsol\\Documents\\Edufy\\Edufy\\Edufy.Domain\\Edufy.Domain.csproj": {
-                "projectPath": "C:\\Users\\Microsol\\Documents\\Edufy\\Edufy\\Edufy.Domain\\Edufy.Domain.csproj"
+              "/Users/baharaghayeva/Documents/RiderProjects/EdufyApp/Edufy.Domain/Edufy.Domain.csproj": {
+                "projectPath": "/Users/baharaghayeva/Documents/RiderProjects/EdufyApp/Edufy.Domain/Edufy.Domain.csproj"
               },
-              "C:\\Users\\Microsol\\Documents\\Edufy\\Edufy\\Edufy.Repository\\Edufy.Repository.csproj": {
-                "projectPath": "C:\\Users\\Microsol\\Documents\\Edufy\\Edufy\\Edufy.Repository\\Edufy.Repository.csproj"
+              "/Users/baharaghayeva/Documents/RiderProjects/EdufyApp/Edufy.Repository/Edufy.Repository.csproj": {
+                "projectPath": "/Users/baharaghayeva/Documents/RiderProjects/EdufyApp/Edufy.Repository/Edufy.Repository.csproj"
               },
-              "C:\\Users\\Microsol\\Documents\\Edufy\\Edufy\\Edufy.SqlServer\\Edufy.SqlServer.csproj": {
-                "projectPath": "C:\\Users\\Microsol\\Documents\\Edufy\\Edufy\\Edufy.SqlServer\\Edufy.SqlServer.csproj"
+              "/Users/baharaghayeva/Documents/RiderProjects/EdufyApp/Edufy.SqlServer/Edufy.SqlServer.csproj": {
+                "projectPath": "/Users/baharaghayeva/Documents/RiderProjects/EdufyApp/Edufy.SqlServer/Edufy.SqlServer.csproj"
               }
             }
           }
@@ -64,13 +57,25 @@
         "net10.0": {
           "targetAlias": "net10.0",
           "dependencies": {
-            "Microsoft.AspNetCore.OpenApi": {
+            "Microsoft.AspNetCore.App.Internal.Assets": {
+              "suppressParent": "All",
               "target": "Package",
-              "version": "[10.0.1, )"
+              "version": "[10.0.1, )",
+              "autoReferenced": true
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[10.0.3, )"
+            },
+            "Microsoft.OpenApi": {
+              "target": "Package",
+              "version": "[2.4.1, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
-              "version": "[10.1.0, )"
+              "version": "[10.1.4, )"
             }
           },
           "imports": [
@@ -92,7 +97,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.101/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.101/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.AspNetCore": "(,10.0.32767]",
             "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",
@@ -510,43 +515,36 @@
         }
       }
     },
-    "C:\\Users\\Microsol\\Documents\\Edufy\\Edufy\\Edufy.Application\\Edufy.Application.csproj": {
+    "/Users/baharaghayeva/Documents/RiderProjects/EdufyApp/Edufy.Application/Edufy.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Microsol\\Documents\\Edufy\\Edufy\\Edufy.Application\\Edufy.Application.csproj",
+        "projectUniqueName": "/Users/baharaghayeva/Documents/RiderProjects/EdufyApp/Edufy.Application/Edufy.Application.csproj",
         "projectName": "Edufy.Application",
-        "projectPath": "C:\\Users\\Microsol\\Documents\\Edufy\\Edufy\\Edufy.Application\\Edufy.Application.csproj",
-        "packagesPath": "C:\\Users\\Microsol\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Microsol\\Documents\\Edufy\\Edufy\\Edufy.Application\\obj\\",
+        "projectPath": "/Users/baharaghayeva/Documents/RiderProjects/EdufyApp/Edufy.Application/Edufy.Application.csproj",
+        "packagesPath": "/Users/baharaghayeva/.nuget/packages/",
+        "outputPath": "/Users/baharaghayeva/Documents/RiderProjects/EdufyApp/Edufy.Application/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Microsol\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/baharaghayeva/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net10.0": {
             "targetAlias": "net10.0",
             "projectReferences": {
-              "C:\\Users\\Microsol\\Documents\\Edufy\\Edufy\\Edufy.Domain\\Edufy.Domain.csproj": {
-                "projectPath": "C:\\Users\\Microsol\\Documents\\Edufy\\Edufy\\Edufy.Domain\\Edufy.Domain.csproj"
+              "/Users/baharaghayeva/Documents/RiderProjects/EdufyApp/Edufy.Domain/Edufy.Domain.csproj": {
+                "projectPath": "/Users/baharaghayeva/Documents/RiderProjects/EdufyApp/Edufy.Domain/Edufy.Domain.csproj"
               },
-              "C:\\Users\\Microsol\\Documents\\Edufy\\Edufy\\Edufy.Repository\\Edufy.Repository.csproj": {
-                "projectPath": "C:\\Users\\Microsol\\Documents\\Edufy\\Edufy\\Edufy.Repository\\Edufy.Repository.csproj"
+              "/Users/baharaghayeva/Documents/RiderProjects/EdufyApp/Edufy.Repository/Edufy.Repository.csproj": {
+                "projectPath": "/Users/baharaghayeva/Documents/RiderProjects/EdufyApp/Edufy.Repository/Edufy.Repository.csproj"
               },
-              "C:\\Users\\Microsol\\Documents\\Edufy\\Edufy\\Edufy.SqlServer\\Edufy.SqlServer.csproj": {
-                "projectPath": "C:\\Users\\Microsol\\Documents\\Edufy\\Edufy\\Edufy.SqlServer\\Edufy.SqlServer.csproj"
+              "/Users/baharaghayeva/Documents/RiderProjects/EdufyApp/Edufy.SqlServer/Edufy.SqlServer.csproj": {
+                "projectPath": "/Users/baharaghayeva/Documents/RiderProjects/EdufyApp/Edufy.SqlServer/Edufy.SqlServer.csproj"
               }
             }
           }
@@ -592,7 +590,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.101/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.101/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
@@ -870,29 +868,22 @@
         }
       }
     },
-    "C:\\Users\\Microsol\\Documents\\Edufy\\Edufy\\Edufy.Domain\\Edufy.Domain.csproj": {
+    "/Users/baharaghayeva/Documents/RiderProjects/EdufyApp/Edufy.Domain/Edufy.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Microsol\\Documents\\Edufy\\Edufy\\Edufy.Domain\\Edufy.Domain.csproj",
+        "projectUniqueName": "/Users/baharaghayeva/Documents/RiderProjects/EdufyApp/Edufy.Domain/Edufy.Domain.csproj",
         "projectName": "Edufy.Domain",
-        "projectPath": "C:\\Users\\Microsol\\Documents\\Edufy\\Edufy\\Edufy.Domain\\Edufy.Domain.csproj",
-        "packagesPath": "C:\\Users\\Microsol\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Microsol\\Documents\\Edufy\\Edufy\\Edufy.Domain\\obj\\",
+        "projectPath": "/Users/baharaghayeva/Documents/RiderProjects/EdufyApp/Edufy.Domain/Edufy.Domain.csproj",
+        "packagesPath": "/Users/baharaghayeva/.nuget/packages/",
+        "outputPath": "/Users/baharaghayeva/Documents/RiderProjects/EdufyApp/Edufy.Domain/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Microsol\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/baharaghayeva/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -942,7 +933,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.101/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.101/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
@@ -1220,37 +1211,30 @@
         }
       }
     },
-    "C:\\Users\\Microsol\\Documents\\Edufy\\Edufy\\Edufy.Repository\\Edufy.Repository.csproj": {
+    "/Users/baharaghayeva/Documents/RiderProjects/EdufyApp/Edufy.Repository/Edufy.Repository.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Microsol\\Documents\\Edufy\\Edufy\\Edufy.Repository\\Edufy.Repository.csproj",
+        "projectUniqueName": "/Users/baharaghayeva/Documents/RiderProjects/EdufyApp/Edufy.Repository/Edufy.Repository.csproj",
         "projectName": "Edufy.Repository",
-        "projectPath": "C:\\Users\\Microsol\\Documents\\Edufy\\Edufy\\Edufy.Repository\\Edufy.Repository.csproj",
-        "packagesPath": "C:\\Users\\Microsol\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Microsol\\Documents\\Edufy\\Edufy\\Edufy.Repository\\obj\\",
+        "projectPath": "/Users/baharaghayeva/Documents/RiderProjects/EdufyApp/Edufy.Repository/Edufy.Repository.csproj",
+        "packagesPath": "/Users/baharaghayeva/.nuget/packages/",
+        "outputPath": "/Users/baharaghayeva/Documents/RiderProjects/EdufyApp/Edufy.Repository/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Microsol\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/baharaghayeva/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net10.0": {
             "targetAlias": "net10.0",
             "projectReferences": {
-              "C:\\Users\\Microsol\\Documents\\Edufy\\Edufy\\Edufy.Domain\\Edufy.Domain.csproj": {
-                "projectPath": "C:\\Users\\Microsol\\Documents\\Edufy\\Edufy\\Edufy.Domain\\Edufy.Domain.csproj"
+              "/Users/baharaghayeva/Documents/RiderProjects/EdufyApp/Edufy.Domain/Edufy.Domain.csproj": {
+                "projectPath": "/Users/baharaghayeva/Documents/RiderProjects/EdufyApp/Edufy.Domain/Edufy.Domain.csproj"
               }
             }
           }
@@ -1292,7 +1276,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.101/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.101/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
@@ -1570,40 +1554,33 @@
         }
       }
     },
-    "C:\\Users\\Microsol\\Documents\\Edufy\\Edufy\\Edufy.SqlServer\\Edufy.SqlServer.csproj": {
+    "/Users/baharaghayeva/Documents/RiderProjects/EdufyApp/Edufy.SqlServer/Edufy.SqlServer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Microsol\\Documents\\Edufy\\Edufy\\Edufy.SqlServer\\Edufy.SqlServer.csproj",
+        "projectUniqueName": "/Users/baharaghayeva/Documents/RiderProjects/EdufyApp/Edufy.SqlServer/Edufy.SqlServer.csproj",
         "projectName": "Edufy.SqlServer",
-        "projectPath": "C:\\Users\\Microsol\\Documents\\Edufy\\Edufy\\Edufy.SqlServer\\Edufy.SqlServer.csproj",
-        "packagesPath": "C:\\Users\\Microsol\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Microsol\\Documents\\Edufy\\Edufy\\Edufy.SqlServer\\obj\\",
+        "projectPath": "/Users/baharaghayeva/Documents/RiderProjects/EdufyApp/Edufy.SqlServer/Edufy.SqlServer.csproj",
+        "packagesPath": "/Users/baharaghayeva/.nuget/packages/",
+        "outputPath": "/Users/baharaghayeva/Documents/RiderProjects/EdufyApp/Edufy.SqlServer/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Microsol\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/baharaghayeva/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net10.0": {
             "targetAlias": "net10.0",
             "projectReferences": {
-              "C:\\Users\\Microsol\\Documents\\Edufy\\Edufy\\Edufy.Domain\\Edufy.Domain.csproj": {
-                "projectPath": "C:\\Users\\Microsol\\Documents\\Edufy\\Edufy\\Edufy.Domain\\Edufy.Domain.csproj"
+              "/Users/baharaghayeva/Documents/RiderProjects/EdufyApp/Edufy.Domain/Edufy.Domain.csproj": {
+                "projectPath": "/Users/baharaghayeva/Documents/RiderProjects/EdufyApp/Edufy.Domain/Edufy.Domain.csproj"
               },
-              "C:\\Users\\Microsol\\Documents\\Edufy\\Edufy\\Edufy.Repository\\Edufy.Repository.csproj": {
-                "projectPath": "C:\\Users\\Microsol\\Documents\\Edufy\\Edufy\\Edufy.Repository\\Edufy.Repository.csproj"
+              "/Users/baharaghayeva/Documents/RiderProjects/EdufyApp/Edufy.Repository/Edufy.Repository.csproj": {
+                "projectPath": "/Users/baharaghayeva/Documents/RiderProjects/EdufyApp/Edufy.Repository/Edufy.Repository.csproj"
               }
             }
           }
@@ -1639,7 +1616,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.101/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.101/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",

@@ -1,3 +1,5 @@
+using Edufy.Domain.Abstractions;
+using Edufy.Domain.Common;
 using Edufy.Domain.DTOs;
 using Edufy.Domain.Entities;
 using Edufy.Domain.Enums;
@@ -10,6 +12,7 @@ namespace Edufy.Application.Services;
 
 public class AuthService(
     EdufyDbContext db,
+    ICurrentUser currentUser,
     UserManager<User> userManager,
     RoleManager<IdentityRole<Guid>> roleManager,
     ITokenService tokens)
@@ -17,81 +20,100 @@ public class AuthService(
 {
     private static readonly string[] AllowedRoles = ["Teacher", "Student"];
 
-    public async Task<AuthResponse> RegisterAsync(RegisterRequest req, CancellationToken ct)
+    public async Task<Result<AuthResponse>> RegisterAsync(RegisterRequest req, CancellationToken ct)
     {
-        var email = req.Email.Trim().ToLowerInvariant();
+        var email = (req.Email ?? "").Trim().ToLowerInvariant();
+        if (string.IsNullOrWhiteSpace(email))
+            return Result<AuthResponse>.BadRequest("Email is required.");
 
         var exists = await userManager.Users.AnyAsync(x => x.Email == email, ct);
-        if (exists) throw new Exception("Bu email artıq mövcuddur");
+        if (exists)
+            return Result<AuthResponse>.Conflict("This email is already in use.");
 
         var user = new User
         {
             Id = Guid.NewGuid(),
             Email = email,
-            UserName = email
+            UserName = req.FullName
         };
 
         var create = await userManager.CreateAsync(user, req.Password);
         if (!create.Succeeded)
-            throw new Exception(string.Join("; ", create.Errors.Select(e => e.Description)));
+            return Result<AuthResponse>.BadRequest(string.Join("; ", create.Errors.Select(e => e.Description)));
 
-        // Rol YOX → token rol claim-siz veriləcək
-        return await IssueTokensAsync(user, roles: [], ct);
+        // No role yet -> tokens without role claim (RequiresRoleSelection = true)
+        return await IssueTokensAsync(user, roles: Array.Empty<string>(), created: true, ct);
     }
 
-    public async Task<AuthResponse> LoginAsync(LoginRequest req, CancellationToken ct)
+    public async Task<Result<AuthResponse>> LoginAsync(LoginRequest req, CancellationToken ct)
     {
-        var email = req.Email.Trim().ToLowerInvariant();
-        var user = await userManager.Users.FirstOrDefaultAsync(x => x.Email == email, ct)
-                   ?? throw new Exception("Email və ya şifrə yanlışdır");
+        var email = (req.Email ?? "").Trim().ToLowerInvariant();
+        if (string.IsNullOrWhiteSpace(email))
+            return Result<AuthResponse>.BadRequest("Email is required.");
+
+        var user = await userManager.Users.FirstOrDefaultAsync(x => x.Email == email, ct);
+        if (user is null)
+            return Result<AuthResponse>.Unauthorized("Invalid email or password.");
 
         var ok = await userManager.CheckPasswordAsync(user, req.Password);
-        if (!ok) throw new Exception("Email və ya şifrə yanlışdır");
+        if (!ok)
+            return Result<AuthResponse>.Unauthorized("Invalid email or password.");
 
         var roles = await userManager.GetRolesAsync(user);
-        return await IssueTokensAsync(user, roles, ct);
+        return await IssueTokensAsync(user, roles, created: false, ct);
     }
 
-    public async Task<AuthResponse> SetRoleAsync(Guid userId, UserRole role, CancellationToken ct)
+    public async Task<Result<AuthResponse>> SetRoleAsync(Guid userId, UserRole role, CancellationToken ct)
     {
-        if (!AllowedRoles.Contains(role.ToString()))
-            throw new Exception("Yanlış rol seçildi");
+        var roleName = role.ToString();
 
-        var user = await userManager.FindByIdAsync(userId.ToString())
-                   ?? throw new Exception("User tapılmadı");
+        if (!AllowedRoles.Contains(roleName))
+            return Result<AuthResponse>.BadRequest("Invalid role selected.");
+
+        var user = await userManager.FindByIdAsync(userId.ToString());
+        if (user is null)
+            return Result<AuthResponse>.NotFound("User not found.");
 
         var currentRoles = await userManager.GetRolesAsync(user);
         if (currentRoles.Count > 0)
-            throw new Exception("Rol artıq seçilib"); // istəsən change-role flow edə bilərsən
+            return Result<AuthResponse>.Conflict("Role is already selected.");
 
-        // Role yoxdursa yaradaq
-        var roleExists = await roleManager.RoleExistsAsync(role.ToString());
+        var roleExists = await roleManager.RoleExistsAsync(roleName);
         if (!roleExists)
-            await roleManager.CreateAsync(new IdentityRole<Guid>(role.ToString()));
+        {
+            var created = await roleManager.CreateAsync(new IdentityRole<Guid>(roleName));
+            if (!created.Succeeded)
+                return Result<AuthResponse>.ServerError(string.Join("; ", created.Errors.Select(e => e.Description)));
+        }
 
-        var add = await userManager.AddToRoleAsync(user, role.ToString());
+        var add = await userManager.AddToRoleAsync(user, roleName);
         if (!add.Succeeded)
-            throw new Exception(string.Join("; ", add.Errors.Select(e => e.Description)));
+            return Result<AuthResponse>.BadRequest(string.Join("; ", add.Errors.Select(e => e.Description)));
 
-        // Rol seçildi → yeni tokenlər (role claim ilə)
         var roles = await userManager.GetRolesAsync(user);
-        return await IssueTokensAsync(user, roles, ct);
+        return await IssueTokensAsync(user, roles, created: false, ct);
     }
 
-    public async Task<AuthResponse> RefreshAsync(string refreshToken, CancellationToken ct)
+    public async Task<Result<AuthResponse>> RefreshAsync(string refreshToken, CancellationToken ct)
     {
+        if (string.IsNullOrWhiteSpace(refreshToken))
+            return Result<AuthResponse>.BadRequest("Refresh token is required.");
+
         var tokenHash = tokens.Sha256Base64(refreshToken);
 
         var rt = await db.RefreshTokens
-                     .Include(x => x.User)
-                     .FirstOrDefaultAsync(x => x.TokenHash == tokenHash, ct)
-                 ?? throw new Exception("Refresh token etibarsızdır");
+            .Include(x => x.User)
+            .FirstOrDefaultAsync(x => x.TokenHash == tokenHash, ct);
 
-        if (!rt.IsActive) throw new Exception("Refresh token müddəti bitib və ya ləğv edilib");
+        if (rt is null)
+            return Result<AuthResponse>.Unauthorized("Invalid refresh token.");
+
+        if (!rt.IsActive)
+            return Result<AuthResponse>.Unauthorized("Refresh token has expired or was revoked.");
 
         var user = rt.User;
 
-        // rotation: köhnəni revoke elə, yenini yarat
+        // rotation: revoke old, create new
         rt.RevokedAt = DateTime.UtcNow;
 
         var newRefresh = tokens.GenerateRefreshToken();
@@ -99,55 +121,73 @@ public class AuthService(
 
         rt.ReplacedByTokenHash = newHash;
 
-        var newRt = new RefreshToken
+        db.RefreshTokens.Add(new RefreshToken
         {
             UserId = user.Id,
             TokenHash = newHash,
             ExpiresAt = tokens.RefreshTokenExpiresAtUtc()
-        };
+        });
 
-        db.RefreshTokens.Add(newRt);
         await db.SaveChangesAsync(ct);
 
         var roles = await userManager.GetRolesAsync(user);
         var access = tokens.CreateAccessToken(user, (IReadOnlyList<string>)roles);
 
-        return new AuthResponse
+        if (string.IsNullOrWhiteSpace(access))
+            return Result<AuthResponse>.ServerError("Failed to generate access token.");
+
+        return Result<AuthResponse>.Ok(new AuthResponse
         {
             AccessToken = access,
             RefreshToken = newRefresh,
             ExpiresInSeconds = tokens.AccessTokenExpiresInSeconds(),
             Roles = roles.ToArray(),
             RequiresRoleSelection = roles.Count == 0
-        };
+        });
     }
 
-    public async Task LogoutAsync(Guid userId, string refreshToken, CancellationToken ct)
+    public async Task<Result<bool>> LogoutAsync(string refreshToken, CancellationToken ct)
     {
+        if (!currentUser.IsAuthenticated || currentUser.UserId is null)
+            return Result<bool>.Unauthorized("Missing or invalid access token.");
+
+        if (string.IsNullOrWhiteSpace(refreshToken))
+            return Result<bool>.BadRequest("Refresh token is required.");
+
+        var userId = currentUser.UserId.Value;
         var tokenHash = tokens.Sha256Base64(refreshToken);
 
         var rt = await db.RefreshTokens
             .FirstOrDefaultAsync(x => x.UserId == userId && x.TokenHash == tokenHash, ct);
 
-        if (rt == null) return;
+        // idempotent: tapılmasa belə OK
+        if (rt is null)
+            return Result<bool>.Ok(true, "Logged out.");
 
         rt.RevokedAt = DateTime.UtcNow;
         await db.SaveChangesAsync(ct);
+
+        return Result<bool>.Ok(true, "Logged out.");
     }
 
-    public async Task<(Guid UserId, string Email, string[] Roles, bool RequiresRoleSelection)> MeAsync(Guid userId,
-        CancellationToken ct)
+    public async Task<Result<(Guid UserId, string Email, string[] Roles, bool RequiresRoleSelection)>> MeAsync(Guid userId, CancellationToken ct)
     {
-        var user = await userManager.FindByIdAsync(userId.ToString())
-                   ?? throw new Exception("User tapılmadı");
+        var user = await userManager.FindByIdAsync(userId.ToString());
+        if (user is null)
+            return Result<(Guid UserId, string Email, string[] Roles, bool RequiresRoleSelection)>.NotFound("User not found.");
 
         var roles = await userManager.GetRolesAsync(user);
-        return (user.Id, user.Email ?? "", roles.ToArray(), roles.Count == 0);
+
+        return Result<(Guid UserId, string Email, string[] Roles, bool RequiresRoleSelection)>.Ok(new ValueTuple<Guid, string, string[], bool>(
+            user.Id,
+            user.Email ?? "",
+            roles.ToArray(),
+            roles.Count == 0
+        ));
     }
 
-    private async Task<AuthResponse> IssueTokensAsync(User user, IList<string> roles, CancellationToken ct)
+    private async Task<Result<AuthResponse>> IssueTokensAsync(User user, IList<string> roles, bool created, CancellationToken ct)
     {
-        // refresh token DB-yə hash olaraq yazılır
         var refresh = tokens.GenerateRefreshToken();
         var refreshHash = tokens.Sha256Base64(refresh);
 
@@ -161,8 +201,10 @@ public class AuthService(
         await db.SaveChangesAsync(ct);
 
         var access = tokens.CreateAccessToken(user, (IReadOnlyList<string>)roles);
+        if (string.IsNullOrWhiteSpace(access))
+            return Result<AuthResponse>.ServerError("Failed to generate access token.");
 
-        return new AuthResponse
+        var payload = new AuthResponse
         {
             AccessToken = access,
             RefreshToken = refresh,
@@ -170,5 +212,9 @@ public class AuthService(
             Roles = roles.ToArray(),
             RequiresRoleSelection = roles.Count == 0
         };
+
+        return created
+            ? Result<AuthResponse>.Created(payload, "User registered successfully.")
+            : Result<AuthResponse>.Ok(payload);
     }
 }

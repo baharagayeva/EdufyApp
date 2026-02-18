@@ -9,7 +9,7 @@ public class CourseApplication
     public int CourseId { get; set; }
     public Course Course { get; set; } = default!;
 
-    public int StudentUserId { get; set; }
+    public Guid? StudentUserId { get; set; }
     public User Student { get; set; } = default!;
 
     public ApplicationStatus Status { get; set; } = ApplicationStatus.Pending;

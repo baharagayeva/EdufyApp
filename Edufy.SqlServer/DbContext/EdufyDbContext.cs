@@ -22,6 +22,7 @@ public class EdufyDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.HasDefaultSchema("gp_edufy");
         modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
         modelBuilder.ApplyConfiguration(new RefreshTokenConfiguration());
         
