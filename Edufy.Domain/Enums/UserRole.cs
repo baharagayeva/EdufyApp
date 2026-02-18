@@ -1,0 +1,7 @@
+namespace Edufy.Domain.Enums;
+
+public enum UserRole
+{
+    Teacher = 1,
+    Student = 2
+}
