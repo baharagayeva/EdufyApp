@@ -1,3 +1,11 @@
+**/bin/
+**/obj/
+.vs/
+.idea/
+**/BuildHost-net472/
+**/BuildHost-netcore/
+
+
 # Default ignored files
 /shelf/
 /workspace.xml
