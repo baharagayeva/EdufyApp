@@ -1,4 +1,4 @@
-using Edufy.Domain.Common;
+using Edufy.Domain.Commons;
 using Edufy.Domain.DTOs;
 using Edufy.Domain.Enums;
 

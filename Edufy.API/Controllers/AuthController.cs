@@ -1,5 +1,5 @@
 using System.Security.Claims;
-using Edufy.Domain.Common;
+using Edufy.Application.Common;
 using Edufy.Domain.DTOs;
 using Edufy.Domain.Services;
 using Microsoft.AspNetCore.Authorization;
