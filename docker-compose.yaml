@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+  edufy-api:
+    container_name: edufy-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
