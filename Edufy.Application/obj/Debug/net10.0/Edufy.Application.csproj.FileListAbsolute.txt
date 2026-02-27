@@ -1,0 +1,17 @@
+/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.Application/bin/Debug/net10.0/Edufy.Application.deps.json
+/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.Application/bin/Debug/net10.0/Edufy.Application.dll
+/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.Application/bin/Debug/net10.0/Edufy.Application.pdb
+/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.Application/bin/Debug/net10.0/Edufy.Domain.dll
+/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.Application/bin/Debug/net10.0/Edufy.SqlServer.dll
+/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.Application/bin/Debug/net10.0/Edufy.Domain.pdb
+/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.Application/bin/Debug/net10.0/Edufy.SqlServer.pdb
+/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.Application/obj/Debug/net10.0/Edufy.Application.csproj.AssemblyReference.cache
+/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.Application/obj/Debug/net10.0/Edufy.Application.GeneratedMSBuildEditorConfig.editorconfig
+/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.Application/obj/Debug/net10.0/Edufy.Application.AssemblyInfoInputs.cache
+/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.Application/obj/Debug/net10.0/Edufy.Application.AssemblyInfo.cs
+/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.Application/obj/Debug/net10.0/Edufy.Application.csproj.CoreCompileInputs.cache
+/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.Application/obj/Debug/net10.0/Edufy.Ap.3D44D474.Up2Date
+/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.Application/obj/Debug/net10.0/Edufy.Application.dll
+/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.Application/obj/Debug/net10.0/refint/Edufy.Application.dll
+/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.Application/obj/Debug/net10.0/Edufy.Application.pdb
+/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.Application/obj/Debug/net10.0/ref/Edufy.Application.dll

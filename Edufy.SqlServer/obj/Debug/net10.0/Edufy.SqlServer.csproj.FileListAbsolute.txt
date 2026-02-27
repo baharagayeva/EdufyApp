@@ -1,0 +1,15 @@
+/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.SqlServer/bin/Debug/net10.0/Edufy.SqlServer.deps.json
+/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.SqlServer/bin/Debug/net10.0/Edufy.SqlServer.dll
+/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.SqlServer/bin/Debug/net10.0/Edufy.SqlServer.pdb
+/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.SqlServer/bin/Debug/net10.0/Edufy.Domain.dll
+/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.SqlServer/bin/Debug/net10.0/Edufy.Domain.pdb
+/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.SqlServer/obj/Debug/net10.0/Edufy.SqlServer.csproj.AssemblyReference.cache
+/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.SqlServer/obj/Debug/net10.0/Edufy.SqlServer.GeneratedMSBuildEditorConfig.editorconfig
+/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.SqlServer/obj/Debug/net10.0/Edufy.SqlServer.AssemblyInfoInputs.cache
+/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.SqlServer/obj/Debug/net10.0/Edufy.SqlServer.AssemblyInfo.cs
+/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.SqlServer/obj/Debug/net10.0/Edufy.SqlServer.csproj.CoreCompileInputs.cache
+/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.SqlServer/obj/Debug/net10.0/Edufy.Sq.16A8EEF4.Up2Date
+/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.SqlServer/obj/Debug/net10.0/Edufy.SqlServer.dll
+/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.SqlServer/obj/Debug/net10.0/refint/Edufy.SqlServer.dll
+/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.SqlServer/obj/Debug/net10.0/Edufy.SqlServer.pdb
+/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.SqlServer/obj/Debug/net10.0/ref/Edufy.SqlServer.dll

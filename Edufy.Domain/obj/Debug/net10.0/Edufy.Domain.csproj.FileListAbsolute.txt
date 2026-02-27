@@ -1,0 +1,12 @@
+/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.Domain/bin/Debug/net10.0/Edufy.Domain.deps.json
+/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.Domain/bin/Debug/net10.0/Edufy.Domain.dll
+/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.Domain/bin/Debug/net10.0/Edufy.Domain.pdb
+/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.Domain/obj/Debug/net10.0/Edufy.Domain.csproj.AssemblyReference.cache
+/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.Domain/obj/Debug/net10.0/Edufy.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.Domain/obj/Debug/net10.0/Edufy.Domain.AssemblyInfoInputs.cache
+/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.Domain/obj/Debug/net10.0/Edufy.Domain.AssemblyInfo.cs
+/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.Domain/obj/Debug/net10.0/Edufy.Domain.csproj.CoreCompileInputs.cache
+/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.Domain/obj/Debug/net10.0/Edufy.Domain.dll
+/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.Domain/obj/Debug/net10.0/refint/Edufy.Domain.dll
+/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.Domain/obj/Debug/net10.0/Edufy.Domain.pdb
+/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.Domain/obj/Debug/net10.0/ref/Edufy.Domain.dll

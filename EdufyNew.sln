@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Edufy.API", "Edufy.API\Edufy.API.csproj", "{D5512B8E-4685-4E49-ADFE-ADAC6CDECF79}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Edufy.Domain", "Edufy.Domain\Edufy.Domain.csproj", "{B2435CAD-0088-4340-91A3-0B6D807F49F0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Edufy.SqlServer", "Edufy.SqlServer\Edufy.SqlServer.csproj", "{EC08B2AA-1ADB-4693-B96D-EA1C9A7152CC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Edufy.Application", "Edufy.Application\Edufy.Application.csproj", "{A9C149ED-DACA-403B-8A3D-122A02BE18FA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D5512B8E-4685-4E49-ADFE-ADAC6CDECF79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5512B8E-4685-4E49-ADFE-ADAC6CDECF79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5512B8E-4685-4E49-ADFE-ADAC6CDECF79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5512B8E-4685-4E49-ADFE-ADAC6CDECF79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2435CAD-0088-4340-91A3-0B6D807F49F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2435CAD-0088-4340-91A3-0B6D807F49F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2435CAD-0088-4340-91A3-0B6D807F49F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2435CAD-0088-4340-91A3-0B6D807F49F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC08B2AA-1ADB-4693-B96D-EA1C9A7152CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC08B2AA-1ADB-4693-B96D-EA1C9A7152CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC08B2AA-1ADB-4693-B96D-EA1C9A7152CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC08B2AA-1ADB-4693-B96D-EA1C9A7152CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9C149ED-DACA-403B-8A3D-122A02BE18FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9C149ED-DACA-403B-8A3D-122A02BE18FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9C149ED-DACA-403B-8A3D-122A02BE18FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9C149ED-DACA-403B-8A3D-122A02BE18FA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
