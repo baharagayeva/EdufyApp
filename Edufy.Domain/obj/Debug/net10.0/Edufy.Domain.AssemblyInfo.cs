@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Edufy.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+67703536d2282844c12fdc79b93679afe64b5c56")]
 [assembly: System.Reflection.AssemblyProductAttribute("Edufy.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Edufy.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
