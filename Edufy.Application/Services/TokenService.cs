@@ -30,7 +30,7 @@ public class TokenService(IOptions<JwtOptions> opt) : ITokenService
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_opt.Key));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-        var expires = DateTime.UtcNow.AddMinutes(_opt.AccessTokenMinutes);
+        var expires = DateTime.UtcNow.AddHours(4).AddMinutes(_opt.AccessTokenMinutes);
 
         var token = new JwtSecurityToken(
             issuer: _opt.Issuer,
@@ -57,5 +57,5 @@ public class TokenService(IOptions<JwtOptions> opt) : ITokenService
 
     public int AccessTokenExpiresInSeconds() => _opt.AccessTokenMinutes * 60;
 
-    public DateTime RefreshTokenExpiresAtUtc() => DateTime.UtcNow.AddDays(_opt.RefreshTokenDays);
+    public DateTime RefreshTokenExpiresAtUtc() => DateTime.UtcNow.AddHours(4).AddDays(_opt.RefreshTokenDays);
 }

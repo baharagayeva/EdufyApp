@@ -1,6 +1,3 @@
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Edufy.Application.CQRS.Queries.Requests;
 using Edufy.Application.CQRS.Queries.Responses;
 using Edufy.Domain.Abstractions;
@@ -17,35 +14,34 @@ public sealed class GetHomeQueryHandler(EdufyDbContext db, ICurrentUser currentU
 {
     public async Task<Result<GetHomeQueryResponse>> Handle(GetHomeQueryRequest request, CancellationToken ct)
     {
-        var popularCourses = await db.Courses
+        var academies = await db.Academies
             .AsNoTracking()
-            .Where(x => x.IsPopular && x.IsActive)
-            .OrderByDescending(x => x.Id)
+            .OrderByDescending(x => x.TotalStudents)
             .Take(request.PopularTake)
-            .Select(x => new CourseCardDto(
+            .Select(x => new AcademyCardDto(
                 x.Id,
-                x.Title,
-                $"{x.DurationMonths} ay",
-                x.IsActive,
-                x.CoverImageUrl
+                x.Name,
+                x.LogoUrl,
+                x.Programs.Count
             ))
             .ToListAsync(ct);
 
-        var instructors = await db.InstructorProfiles
+        var instructors = await db.Instructors
             .AsNoTracking()
             .OrderByDescending(x => x.Id)
             .Take(request.InstructorTake)
             .Select(x => new InstructorCardDto(
                 x.Id,
-                x.User.UserName ?? string.Empty,
-                x.Title,
-                x.PhotoUrl
+                x.FirstName + " " + x.LastName,
+                x.Specialization,
+                x.PhotoUrl,
+                x.PriceAzn
             ))
             .ToListAsync(ct);
 
         var response = new GetHomeQueryResponse(
             GreetingName: string.IsNullOrWhiteSpace(currentUser.FullName) ? "İstifadəçi" : currentUser.FullName,
-            PopularCourses: popularCourses,
+            PopularAcademies: academies,
             Instructors: instructors
         );
 

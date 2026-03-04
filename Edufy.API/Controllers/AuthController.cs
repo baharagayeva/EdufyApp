@@ -4,7 +4,7 @@ using Edufy.Domain.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Edufy.Controllers;
+namespace EdufyNew.Controllers;
 
 [ApiController]
 [Route("api/auth")]
@@ -36,4 +36,14 @@ public class AuthController(IAuthService auth) : ControllerBase
     [HttpGet("me")]
     public async Task<IActionResult> Me(CancellationToken ct)
         => (await auth.MeAsync(ct)).ToActionResult();
+    
+    [AllowAnonymous]
+    [HttpPost("forgot-password")]
+    public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordRequest req, CancellationToken ct)
+        => (await auth.ForgotPasswordAsync(req, ct)).ToActionResult();
+
+    [AllowAnonymous]
+    [HttpPost("reset-password")]
+    public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordWithCodeRequest req, CancellationToken ct)
+        => (await auth.ResetPasswordWithCodeAsync(req, ct)).ToActionResult();
 }

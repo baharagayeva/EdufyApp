@@ -8,6 +8,7 @@ public static class MainExtension
     public static void AddMainExtension(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddEfCore(configuration);
+        services.AddSmtp(configuration);
         services.AddServices();
         services.AddJwtAuth(configuration);
         services.AddMediatr();

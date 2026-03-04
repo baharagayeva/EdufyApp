@@ -23,7 +23,7 @@ namespace Edufy.SqlServer.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Edufy.Domain.Entities.Course", b =>
+            modelBuilder.Entity("Edufy.Domain.Entities.Academy", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -31,43 +31,35 @@ namespace Edufy.SqlServer.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("CoverImageUrl")
-                        .HasColumnType("text");
+                    b.Property<string>("About")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
 
-                    b.Property<string>("Description")
+                    b.Property<decimal>("GraduationRate")
+                        .HasPrecision(5, 2)
+                        .HasColumnType("numeric(5,2)");
+
+                    b.Property<string>("LogoUrl")
+                        .HasMaxLength(512)
+                        .HasColumnType("character varying(512)");
+
+                    b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
 
-                    b.Property<int>("DurationMonths")
+                    b.Property<int>("TotalApplications")
                         .HasColumnType("integer");
 
-                    b.Property<int>("GroupSizeMax")
+                    b.Property<int>("TotalStudents")
                         .HasColumnType("integer");
-
-                    b.Property<int>("GroupSizeMin")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("InstructorProfileId")
-                        .HasColumnType("integer");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsPopular")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("InstructorProfileId");
-
-                    b.ToTable("Courses", "gp_edufy");
+                    b.ToTable("Academies", "gp_edufy");
                 });
 
-            modelBuilder.Entity("Edufy.Domain.Entities.CourseApplication", b =>
+            modelBuilder.Entity("Edufy.Domain.Entities.Application", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -78,83 +70,90 @@ namespace Edufy.SqlServer.Migrations
                     b.Property<DateTime>("AppliedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("CourseId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("integer");
-
-                    b.Property<Guid>("StudentId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("StudentUserId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourseId");
-
-                    b.HasIndex("StudentId");
-
-                    b.ToTable("CourseApplications", "gp_edufy");
-                });
-
-            modelBuilder.Entity("Edufy.Domain.Entities.CourseModule", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CourseId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Order")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Title")
+                    b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
-                    b.HasKey("Id");
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
-                    b.HasIndex("CourseId", "Order")
-                        .IsUnique();
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
 
-                    b.ToTable("CourseModules", "gp_edufy");
-                });
-
-            modelBuilder.Entity("Edufy.Domain.Entities.InstructorProfile", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("ProgramId")
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Bio")
+                    b.Property<string>("Status")
                         .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("LinkedInUrl")
-                        .HasColumnType("text");
-
-                    b.Property<string>("PhotoUrl")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("ProgramId");
 
-                    b.ToTable("InstructorProfiles", "gp_edufy");
+                    b.HasIndex("UserId", "ProgramId")
+                        .IsUnique();
+
+                    b.ToTable("Applications", "gp_edufy");
+                });
+
+            modelBuilder.Entity("Edufy.Domain.Entities.Instructor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Bio")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("LinkedInUrl")
+                        .HasMaxLength(512)
+                        .HasColumnType("character varying(512)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PhotoUrl")
+                        .HasMaxLength(512)
+                        .HasColumnType("character varying(512)");
+
+                    b.Property<decimal>("PriceAzn")
+                        .HasPrecision(8, 2)
+                        .HasColumnType("numeric(8,2)");
+
+                    b.Property<string>("Specialization")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Instructors", "gp_edufy");
                 });
 
             modelBuilder.Entity("Edufy.Domain.Entities.Lesson", b =>
@@ -165,25 +164,142 @@ namespace Edufy.SqlServer.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Content")
-                        .HasColumnType("text");
-
-                    b.Property<int>("CourseModuleId")
+                    b.Property<int>("DurationMinutes")
                         .HasColumnType("integer");
+
+                    b.Property<int>("ModuleId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
 
                     b.Property<int>("Order")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<string>("VideoUrl")
+                        .HasMaxLength(512)
+                        .HasColumnType("character varying(512)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CourseModuleId", "Order")
+                    b.HasIndex("ModuleId", "Order")
                         .IsUnique();
 
                     b.ToTable("Lessons", "gp_edufy");
+                });
+
+            modelBuilder.Entity("Edufy.Domain.Entities.Module", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("IsOpen")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ProgramId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProgramId", "Order")
+                        .IsUnique();
+
+                    b.ToTable("Modules", "gp_edufy");
+                });
+
+            modelBuilder.Entity("Edufy.Domain.Entities.PasswordResetCode", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<int>("AttemptCount")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("CodeHash")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<DateTime>("ExpiresAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("UsedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Email");
+
+                    b.HasIndex("Email", "ExpiresAt");
+
+                    b.ToTable("PasswordResetCodes", "gp_edufy");
+                });
+
+            modelBuilder.Entity("Edufy.Domain.Entities.Program", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("About")
+                        .HasMaxLength(3000)
+                        .HasColumnType("character varying(3000)");
+
+                    b.Property<int>("AcademyId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("DurationMonths")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("GroupMaxSize")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("GroupMinSize")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("InstructorId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AcademyId");
+
+                    b.HasIndex("InstructorId");
+
+                    b.ToTable("Programs", "gp_edufy");
                 });
 
             modelBuilder.Entity("Edufy.Domain.Entities.RefreshToken", b =>
@@ -221,6 +337,33 @@ namespace Edufy.SqlServer.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("RefreshTokens", "gp_edufy");
+                });
+
+            modelBuilder.Entity("Edufy.Domain.Entities.SavedProgram", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ProgramId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("SavedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProgramId");
+
+                    b.HasIndex("UserId", "ProgramId")
+                        .IsUnique();
+
+                    b.ToTable("SavedPrograms", "gp_edufy");
                 });
 
             modelBuilder.Entity("Edufy.Domain.Entities.User", b =>
@@ -424,48 +567,67 @@ namespace Edufy.SqlServer.Migrations
                     b.ToTable("AspNetUserTokens", "gp_edufy");
                 });
 
-            modelBuilder.Entity("Edufy.Domain.Entities.Course", b =>
+            modelBuilder.Entity("Edufy.Domain.Entities.Application", b =>
                 {
-                    b.HasOne("Edufy.Domain.Entities.InstructorProfile", "InstructorProfile")
-                        .WithMany()
-                        .HasForeignKey("InstructorProfileId")
+                    b.HasOne("Edufy.Domain.Entities.Program", "Program")
+                        .WithMany("Applications")
+                        .HasForeignKey("ProgramId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Edufy.Domain.Entities.User", "User")
+                        .WithMany("Applications")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("InstructorProfile");
+                    b.Navigation("Program");
+
+                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Edufy.Domain.Entities.CourseApplication", b =>
+            modelBuilder.Entity("Edufy.Domain.Entities.Lesson", b =>
                 {
-                    b.HasOne("Edufy.Domain.Entities.Course", "Course")
-                        .WithMany()
-                        .HasForeignKey("CourseId")
+                    b.HasOne("Edufy.Domain.Entities.Module", "Module")
+                        .WithMany("Lessons")
+                        .HasForeignKey("ModuleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Edufy.Domain.Entities.User", "Student")
-                        .WithMany()
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Course");
-
-                    b.Navigation("Student");
+                    b.Navigation("Module");
                 });
 
-            modelBuilder.Entity("Edufy.Domain.Entities.CourseModule", b =>
+            modelBuilder.Entity("Edufy.Domain.Entities.Module", b =>
                 {
-                    b.HasOne("Edufy.Domain.Entities.Course", "Course")
+                    b.HasOne("Edufy.Domain.Entities.Program", "Program")
                         .WithMany("Modules")
-                        .HasForeignKey("CourseId")
+                        .HasForeignKey("ProgramId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Course");
+                    b.Navigation("Program");
                 });
 
-            modelBuilder.Entity("Edufy.Domain.Entities.InstructorProfile", b =>
+            modelBuilder.Entity("Edufy.Domain.Entities.Program", b =>
+                {
+                    b.HasOne("Edufy.Domain.Entities.Academy", "Academy")
+                        .WithMany("Programs")
+                        .HasForeignKey("AcademyId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Edufy.Domain.Entities.Instructor", "Instructor")
+                        .WithMany("Programs")
+                        .HasForeignKey("InstructorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Academy");
+
+                    b.Navigation("Instructor");
+                });
+
+            modelBuilder.Entity("Edufy.Domain.Entities.RefreshToken", b =>
                 {
                     b.HasOne("Edufy.Domain.Entities.User", "User")
                         .WithMany()
@@ -476,24 +638,21 @@ namespace Edufy.SqlServer.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Edufy.Domain.Entities.Lesson", b =>
+            modelBuilder.Entity("Edufy.Domain.Entities.SavedProgram", b =>
                 {
-                    b.HasOne("Edufy.Domain.Entities.CourseModule", "CourseModule")
-                        .WithMany("Lessons")
-                        .HasForeignKey("CourseModuleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("Edufy.Domain.Entities.Program", "Program")
+                        .WithMany("SavedPrograms")
+                        .HasForeignKey("ProgramId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("CourseModule");
-                });
-
-            modelBuilder.Entity("Edufy.Domain.Entities.RefreshToken", b =>
-                {
                     b.HasOne("Edufy.Domain.Entities.User", "User")
-                        .WithMany()
+                        .WithMany("SavedPrograms")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Program");
 
                     b.Navigation("User");
                 });
@@ -549,14 +708,35 @@ namespace Edufy.SqlServer.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Edufy.Domain.Entities.Course", b =>
+            modelBuilder.Entity("Edufy.Domain.Entities.Academy", b =>
                 {
-                    b.Navigation("Modules");
+                    b.Navigation("Programs");
                 });
 
-            modelBuilder.Entity("Edufy.Domain.Entities.CourseModule", b =>
+            modelBuilder.Entity("Edufy.Domain.Entities.Instructor", b =>
+                {
+                    b.Navigation("Programs");
+                });
+
+            modelBuilder.Entity("Edufy.Domain.Entities.Module", b =>
                 {
                     b.Navigation("Lessons");
+                });
+
+            modelBuilder.Entity("Edufy.Domain.Entities.Program", b =>
+                {
+                    b.Navigation("Applications");
+
+                    b.Navigation("Modules");
+
+                    b.Navigation("SavedPrograms");
+                });
+
+            modelBuilder.Entity("Edufy.Domain.Entities.User", b =>
+                {
+                    b.Navigation("Applications");
+
+                    b.Navigation("SavedPrograms");
                 });
 #pragma warning restore 612, 618
         }

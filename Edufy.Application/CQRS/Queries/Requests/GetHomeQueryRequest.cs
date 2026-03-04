@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Edufy.Application.CQRS.Queries.Requests;
 
-public sealed record GetHomeQueryRequest(
-    int PopularTake = 6,
-    int InstructorTake = 6
+public record GetHomeQueryRequest(
+    int PopularTake = 5,
+    int InstructorTake = 4
 ) : IRequest<Result<GetHomeQueryResponse>>;

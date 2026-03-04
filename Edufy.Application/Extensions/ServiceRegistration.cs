@@ -17,6 +17,7 @@ public static class ServiceRegistration
         service.AddScoped<ICurrentUser, CurrentUser>();
         service.AddScoped<ITokenService, TokenService>();
         service.AddScoped<IAuthService, AuthService>();
+        service.AddScoped<IEmailSender, SmtpEmailSender>();
 
         service.AddIdentityCore<User>(opt => { opt.User.RequireUniqueEmail = true; })
             .AddRoles<IdentityRole<Guid>>()

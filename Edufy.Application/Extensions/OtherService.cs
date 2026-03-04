@@ -1,3 +1,4 @@
+using Edufy.Domain.DTOs.AuthDTOs;
 using Edufy.SqlServer.DbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -14,5 +15,10 @@ public static class OtherService
             options.UseNpgsql(configuration.GetConnectionString("Postgres"),
                 nmpOptions => { nmpOptions.MigrationsAssembly("Edufy.SqlServer"); });
         });
+    }
+    
+    public static void AddSmtp(this IServiceCollection service, IConfiguration configuration)
+    {
+        service.Configure<SmtpOptions>(configuration.GetSection("Smtp"));
     }
 }

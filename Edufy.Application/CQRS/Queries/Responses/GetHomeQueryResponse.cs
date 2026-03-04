@@ -5,6 +5,6 @@ namespace Edufy.Application.CQRS.Queries.Responses;
 
 public record GetHomeQueryResponse(
     string GreetingName,
-    IReadOnlyList<CourseCardDto> PopularCourses,
-    IReadOnlyList<InstructorCardDto> Instructors
+    List<AcademyCardDto> PopularAcademies,
+    List<InstructorCardDto> Instructors
 );

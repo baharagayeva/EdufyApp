@@ -9,8 +9,9 @@ public interface IAuthService
     Task<Result<AuthResponse>> RegisterAsync(RegisterRequest req, CancellationToken ct);
     Task<Result<AuthResponse>> LoginAsync(LoginRequest req, CancellationToken ct);
     Task<Result<AuthResponse>> RefreshAsync(string refreshToken, CancellationToken ct);
-
     Task<Result<AuthResponse>> SetRoleAsync(UserRole role, CancellationToken ct);
     Task<Result<bool>> LogoutAsync(string refreshToken, CancellationToken ct);
     Task<Result<MeResponse>> MeAsync(CancellationToken ct);
+    Task<Result<MessageResponse>> ForgotPasswordAsync(ForgotPasswordRequest req, CancellationToken ct);
+    Task<Result<MessageResponse>> ResetPasswordWithCodeAsync(ResetPasswordWithCodeRequest req, CancellationToken ct);
 }

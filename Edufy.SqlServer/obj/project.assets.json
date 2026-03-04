@@ -1153,11 +1153,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.SqlServer/Edufy.SqlServer.csproj",
+      "projectUniqueName": "/Users/baharaghayeva/Desktop/EdufyApp/Edufy.SqlServer/Edufy.SqlServer.csproj",
       "projectName": "Edufy.SqlServer",
-      "projectPath": "/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.SqlServer/Edufy.SqlServer.csproj",
+      "projectPath": "/Users/baharaghayeva/Desktop/EdufyApp/Edufy.SqlServer/Edufy.SqlServer.csproj",
       "packagesPath": "/Users/baharaghayeva/.nuget/packages/",
-      "outputPath": "/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.SqlServer/obj/",
+      "outputPath": "/Users/baharaghayeva/Desktop/EdufyApp/Edufy.SqlServer/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/baharaghayeva/.nuget/NuGet/NuGet.Config"
@@ -1172,8 +1172,8 @@
         "net10.0": {
           "targetAlias": "net10.0",
           "projectReferences": {
-            "/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.Domain/Edufy.Domain.csproj": {
-              "projectPath": "/Users/baharaghayeva/RiderProjects/EdufyNew/Edufy.Domain/Edufy.Domain.csproj"
+            "/Users/baharaghayeva/Desktop/EdufyApp/Edufy.Domain/Edufy.Domain.csproj": {
+              "projectPath": "/Users/baharaghayeva/Desktop/EdufyApp/Edufy.Domain/Edufy.Domain.csproj"
             }
           }
         }
@@ -1209,7 +1209,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.101/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.103/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.CSharp": "(,4.7.32767]",
           "Microsoft.VisualBasic": "(,10.4.32767]",

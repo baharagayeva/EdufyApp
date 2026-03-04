@@ -3,10 +3,11 @@ namespace Edufy.Domain.Entities;
 public class Lesson
 {
     public int Id { get; set; }
-    public int CourseModuleId { get; set; }
-    public CourseModule CourseModule { get; set; } = default!;
-
-    public string Title { get; set; } = default!;
-    public string? Content { get; set; } // detail page üçün
+    public int ModuleId { get; set; }
     public int Order { get; set; }
+    public string Name { get; set; } = null!;
+    public string? VideoUrl { get; set; }
+    public int DurationMinutes { get; set; }
+
+    public Module Module { get; set; } = null!;
 }

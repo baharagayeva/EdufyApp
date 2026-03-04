@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using Edufy.Domain.Abstractions;
 using Edufy.Domain.Commons;
 using Edufy.Domain.DTOs.AuthDTOs;
@@ -7,6 +8,7 @@ using Edufy.Domain.Services;
 using Edufy.SqlServer.DbContext;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace Edufy.Application.Services;
 
@@ -15,7 +17,9 @@ public sealed class AuthService(
     UserManager<User> userManager,
     RoleManager<IdentityRole<Guid>> roleManager,
     ITokenService tokens,
-    ICurrentUser currentUser)
+    ICurrentUser currentUser,
+    IEmailSender emailSender,
+    ILogger<AuthService> logger)
     : IAuthService
 {
     private static readonly string[] AllowedRoles = ["Teacher", "Student"];
@@ -37,7 +41,7 @@ public sealed class AuthService(
         {
             Id = Guid.NewGuid(),
             Email = email,
-            UserName = email
+            UserName = req.FullName
         };
 
         var create = await userManager.CreateAsync(user, req.Password);
@@ -117,7 +121,7 @@ public sealed class AuthService(
             return Result<AuthResponse>.Unauthorized("Refresh token expired or revoked.");
 
         // rotation: revoke old, issue new
-        rt.RevokedAt = DateTime.UtcNow;
+        rt.RevokedAt = DateTime.UtcNow.AddHours(4);
 
         var newRefresh = tokens.GenerateRefreshToken();
         var newHash = tokens.Sha256Base64(newRefresh);
@@ -160,7 +164,7 @@ public sealed class AuthService(
         if (rt is null)
             return Result<bool>.Ok(true, "Logged out.");
 
-        rt.RevokedAt = DateTime.UtcNow;
+        rt.RevokedAt = DateTime.UtcNow.AddHours(4);
         await db.SaveChangesAsync(ct);
 
         return Result<bool>.Ok(true, "Logged out.");
@@ -179,12 +183,141 @@ public sealed class AuthService(
 
         var resp = new MeResponse(
             UserId: user.Id,
+            Username: user.UserName ?? string.Empty,
             Email: user.Email ?? "",
             Roles: roles.ToArray(),
             RequiresRoleSelection: roles.Count == 0
         );
 
         return Result<MeResponse>.Ok(resp);
+    }
+
+    public async Task<Result<MessageResponse>> ForgotPasswordAsync(ForgotPasswordRequest req, CancellationToken ct)
+    {
+        try
+        {
+            var email = (req.Email ?? "").Trim().ToLowerInvariant();
+            if (string.IsNullOrWhiteSpace(email))
+                return Result<MessageResponse>.BadRequest("Email is required.");
+
+            // ✅ anti-enumeration: hər zaman eyni mesaj
+            const string genericMsg = "If an account exists for this email, a reset code has been sent.";
+
+            // var user = await userManager.Users.FirstOrDefaultAsync(x => x.Email == email, ct);
+            // if (user is null)
+            //     return Result<MessageResponse>.Ok(new MessageResponse(genericMsg));
+
+            // əvvəlki aktiv kodları deaktiv elə (1 email = 1 aktiv kod)
+            // var actives = await db.PasswordResetCodes
+            //     .Where(x => x.Email == email && x.UsedAt == null && x.ExpiresAt > DateTime.UtcNow.AddHours(4))
+            //     .ToListAsync(ct);
+            //
+            // foreach (var c in actives)
+            //     c.UsedAt = DateTime.UtcNow.AddHours(4);
+
+            var code = Generate6DigitCode();
+            var codeHash = tokens.Sha256Base64(code);
+
+            // db.PasswordResetCodes.Add(new PasswordResetCode
+            // {
+            //     Email = email,
+            //     CodeHash = codeHash,
+            //     ExpiresAt = DateTime.UtcNow.AddHours(4).AddMinutes(10),
+            //     AttemptCount = 0
+            // });
+            //
+            // await db.SaveChangesAsync(ct);
+
+            await emailSender.SendAsync(
+                toEmail: email,
+                subject: "Your password reset code",
+                htmlBody: $@"
+            <p>Your password reset code is:</p>
+            <h2 style=""letter-spacing:2px"">{code}</h2>
+            <p>This code expires in <b>10 minutes</b>.</p>
+            <p>If you did not request this, ignore this email.</p>
+        ",
+                ct: ct
+            );
+
+            return Result<MessageResponse>.Ok(new MessageResponse(genericMsg));
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "SMTP send failed");
+            return Result<MessageResponse>.ServerError("Failed to send reset code. Please try again later.");
+        }
+    }
+
+    public async Task<Result<MessageResponse>> ResetPasswordWithCodeAsync(ResetPasswordWithCodeRequest req,
+        CancellationToken ct)
+    {
+        var email = (req.Email ?? "").Trim().ToLowerInvariant();
+        if (string.IsNullOrWhiteSpace(email))
+            return Result<MessageResponse>.BadRequest("Email is required.");
+
+        var code = (req.Code ?? "").Trim();
+        if (string.IsNullOrWhiteSpace(code))
+            return Result<MessageResponse>.BadRequest("Code is required.");
+
+        if (string.IsNullOrWhiteSpace(req.NewPassword))
+            return Result<MessageResponse>.BadRequest("New password is required.");
+
+        // generic error (anti-enumeration)
+        const string invalidMsg = "Invalid or expired code.";
+
+        var user = await userManager.Users.FirstOrDefaultAsync(x => x.Email == email, ct);
+        if (user is null)
+            return Result<MessageResponse>.BadRequest(invalidMsg);
+
+        // ən son aktiv kod
+        var reset = await db.PasswordResetCodes
+            .Where(x => x.Email == email && x.UsedAt == null)
+            .OrderByDescending(x => x.Id)
+            .FirstOrDefaultAsync(ct);
+
+        if (reset is null || !reset.IsActive)
+            return Result<MessageResponse>.BadRequest(invalidMsg);
+
+        // attempt artır (brute force limit)
+        reset.AttemptCount++;
+
+        var inputHash = tokens.Sha256Base64(code);
+        if (!string.Equals(reset.CodeHash, inputHash, StringComparison.Ordinal))
+        {
+            await db.SaveChangesAsync(ct);
+            return Result<MessageResponse>.BadRequest(invalidMsg);
+        }
+
+        // doğru kod → istifadə olundu
+        reset.UsedAt = DateTime.UtcNow.AddHours(4);
+        await db.SaveChangesAsync(ct);
+
+        // ✅ Identity: token yoxdur deyə Remove+Add edirik
+        var hasPassword = await userManager.HasPasswordAsync(user);
+
+        if (hasPassword)
+        {
+            var remove = await userManager.RemovePasswordAsync(user);
+            if (!remove.Succeeded)
+                return Result<MessageResponse>.ServerError("Failed to reset password.");
+        }
+
+        var add = await userManager.AddPasswordAsync(user, req.NewPassword);
+        if (!add.Succeeded)
+            return Result<MessageResponse>.BadRequest(string.Join("; ", add.Errors.Select(e => e.Description)));
+
+        // (optional) bütün refresh tokenləri revoke et (security)
+        var activeRts = await db.RefreshTokens
+            .Where(x => x.UserId == user.Id && x.RevokedAt == null && x.ExpiresAt > DateTime.UtcNow.AddHours(4))
+            .ToListAsync(ct);
+
+        foreach (var rt in activeRts)
+            rt.RevokedAt = DateTime.UtcNow.AddHours(4);
+
+        await db.SaveChangesAsync(ct);
+
+        return Result<MessageResponse>.Ok(new MessageResponse("Password has been reset successfully."));
     }
 
     private async Task<Result<AuthResponse>> IssueTokensAsync(User user, IList<string> roles, CancellationToken ct)
@@ -211,5 +344,11 @@ public sealed class AuthService(
         );
 
         return Result<AuthResponse>.Ok(resp);
+    }
+
+    private static string Generate6DigitCode()
+    {
+        var n = RandomNumberGenerator.GetInt32(0, 1_000_000);
+        return n.ToString("D6");
     }
 }

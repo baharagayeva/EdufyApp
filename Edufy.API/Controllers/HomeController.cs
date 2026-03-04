@@ -4,7 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Edufy.Controllers;
+namespace EdufyNew.Controllers;
 
 [ApiController]
 [Route("api/home")]
@@ -12,6 +12,9 @@ namespace Edufy.Controllers;
 public class HomeController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> Get(CancellationToken ct)
+    public async Task<IActionResult> Get(
+        [FromQuery] int popularTake = 5,
+        [FromQuery] int instructorTake = 4,
+        CancellationToken ct = default)
         => (await mediator.Send(new GetHomeQueryRequest(), ct)).ToActionResult();
 }

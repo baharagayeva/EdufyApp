@@ -13,27 +13,31 @@ public class EdufyDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
     } 
     
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
-    public required DbSet<User> Users { get; set; }
-    public required DbSet<Lesson> Lessons { get; set; }
-    public required DbSet<InstructorProfile> InstructorProfiles { get; set; }
-    public required DbSet<CourseModule> CourseModules { get; set; }
-    public required DbSet<CourseApplication> CourseApplications { get; set; }
-    public required DbSet<Course> Courses { get; set; }
+    public DbSet<User> Users => Set<User>();
+    public DbSet<Academy> Academies => Set<Academy>();
+    public DbSet<Instructor> Instructors => Set<Instructor>();
+    public DbSet<Program> Programs => Set<Program>();
+    public DbSet<Module> Modules => Set<Module>();
+    public DbSet<Lesson> Lessons => Set<Lesson>();
+    public DbSet<Application> Applications => Set<Application>();
+    public DbSet<SavedProgram> SavedPrograms => Set<SavedProgram>();
+    public DbSet<PasswordResetCode> PasswordResetCodes => Set<PasswordResetCode>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.HasDefaultSchema("gp_edufy");
-        modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
+        modelBuilder.ApplyConfiguration(new AcademyConfiguration());
+        modelBuilder.ApplyConfiguration(new InstructorConfiguration());
+        modelBuilder.ApplyConfiguration(new ProgramConfiguration());
+        modelBuilder.ApplyConfiguration(new ModuleConfiguration());
+        modelBuilder.ApplyConfiguration(new LessonConfiguration());
+        modelBuilder.ApplyConfiguration(new ApplicationConfiguration());
+        modelBuilder.ApplyConfiguration(new SavedProgramConfiguration());
         modelBuilder.ApplyConfiguration(new RefreshTokenConfiguration());
+        modelBuilder.ApplyConfiguration(new PasswordResetCodeConfiguration());
         
         modelBuilder.Entity<User>()
             .HasIndex(x => x.Email).IsUnique();
-
-        modelBuilder.Entity<CourseModule>()
-            .HasIndex(x => new { x.CourseId, x.Order }).IsUnique();
-
-        modelBuilder.Entity<Lesson>()
-            .HasIndex(x => new { x.CourseModuleId, x.Order }).IsUnique();
         
         base.OnModelCreating(modelBuilder);
     }

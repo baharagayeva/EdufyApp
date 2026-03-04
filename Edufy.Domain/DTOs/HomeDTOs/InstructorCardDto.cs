@@ -1,8 +1,9 @@
 namespace Edufy.Domain.DTOs.HomeDTOs;
 
-public sealed record InstructorCardDto(
+public record InstructorCardDto(
     int Id,
     string FullName,
-    string Title,
-    string? PhotoUrl
+    string Specialization,
+    string? PhotoUrl,
+    decimal PriceAzn
 );
