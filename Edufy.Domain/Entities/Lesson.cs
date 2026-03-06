@@ -8,6 +8,9 @@ public class Lesson
     public string Name { get; set; } = null!;
     public string? VideoUrl { get; set; }
     public int DurationMinutes { get; set; }
+    public bool IsDemo { get; set; }             
+    public string? ThumbnailUrl { get; set; }
 
     public Module Module { get; set; } = null!;
+    public ICollection<SavedLesson> SavedLessons { get; set; } = [];
 }

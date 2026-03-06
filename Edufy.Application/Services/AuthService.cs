@@ -203,30 +203,30 @@ public sealed class AuthService(
             // ✅ anti-enumeration: hər zaman eyni mesaj
             const string genericMsg = "If an account exists for this email, a reset code has been sent.";
 
-            // var user = await userManager.Users.FirstOrDefaultAsync(x => x.Email == email, ct);
-            // if (user is null)
-            //     return Result<MessageResponse>.Ok(new MessageResponse(genericMsg));
+            var user = await userManager.Users.FirstOrDefaultAsync(x => x.Email == email, ct);
+            if (user is null)
+                return Result<MessageResponse>.Ok(new MessageResponse(genericMsg));
 
-            // əvvəlki aktiv kodları deaktiv elə (1 email = 1 aktiv kod)
-            // var actives = await db.PasswordResetCodes
-            //     .Where(x => x.Email == email && x.UsedAt == null && x.ExpiresAt > DateTime.UtcNow.AddHours(4))
-            //     .ToListAsync(ct);
-            //
-            // foreach (var c in actives)
-            //     c.UsedAt = DateTime.UtcNow.AddHours(4);
+            //əvvəlki aktiv kodları deaktiv elə (1 email = 1 aktiv kod)
+            var actives = await db.PasswordResetCodes
+                .Where(x => x.Email == email && x.UsedAt == null && x.ExpiresAt > DateTime.UtcNow.AddHours(4))
+                .ToListAsync(ct);
+            
+            foreach (var c in actives)
+                c.UsedAt = DateTime.UtcNow.AddHours(4);
 
             var code = Generate6DigitCode();
             var codeHash = tokens.Sha256Base64(code);
 
-            // db.PasswordResetCodes.Add(new PasswordResetCode
-            // {
-            //     Email = email,
-            //     CodeHash = codeHash,
-            //     ExpiresAt = DateTime.UtcNow.AddHours(4).AddMinutes(10),
-            //     AttemptCount = 0
-            // });
-            //
-            // await db.SaveChangesAsync(ct);
+            db.PasswordResetCodes.Add(new PasswordResetCode
+            {
+                Email = email,
+                CodeHash = codeHash,
+                ExpiresAt = DateTime.UtcNow.AddHours(4).AddMinutes(10),
+                AttemptCount = 0
+            });
+            
+            await db.SaveChangesAsync(ct);
 
             await emailSender.SendAsync(
                 toEmail: email,
