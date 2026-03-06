@@ -18,5 +18,4 @@ public class Program
     public Instructor Instructor { get; set; } = null!;
     public ICollection<Module> Modules { get; set; } = [];
     public ICollection<Application> Applications { get; set; } = [];
-    public ICollection<SavedProgram> SavedPrograms { get; set; } = [];
 }

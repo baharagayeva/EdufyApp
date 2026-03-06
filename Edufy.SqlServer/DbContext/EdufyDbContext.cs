@@ -20,7 +20,7 @@ public class EdufyDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
     public DbSet<Module> Modules => Set<Module>();
     public DbSet<Lesson> Lessons => Set<Lesson>();
     public DbSet<Application> Applications => Set<Application>();
-    public DbSet<SavedProgram> SavedPrograms => Set<SavedProgram>();
+    public DbSet<SavedLesson> SavedLessons => Set<SavedLesson>();
     public DbSet<PasswordResetCode> PasswordResetCodes => Set<PasswordResetCode>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

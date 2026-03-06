@@ -4,5 +4,5 @@ using MediatR;
 
 namespace Edufy.Application.CQRS.Commands.Requests;
 
-public record UnsaveProgramCommandRequest(int ProgramId)
-    : IRequest<Result<UnsaveProgramCommandResponse>>;
+public sealed record SaveLessonCommandRequest(int LessonId)
+    : IRequest<Result<SaveLessonCommandResponse>>;
