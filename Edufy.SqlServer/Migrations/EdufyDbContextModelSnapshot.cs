@@ -18,7 +18,7 @@ namespace Edufy.SqlServer.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("gp_edufy")
-                .HasAnnotation("ProductVersion", "10.0.3")
+                .HasAnnotation("ProductVersion", "8.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -167,6 +167,9 @@ namespace Edufy.SqlServer.Migrations
                     b.Property<int>("DurationMinutes")
                         .HasColumnType("integer");
 
+                    b.Property<bool>("IsDemo")
+                        .HasColumnType("boolean");
+
                     b.Property<int>("ModuleId")
                         .HasColumnType("integer");
 
@@ -177,6 +180,9 @@ namespace Edufy.SqlServer.Migrations
 
                     b.Property<int>("Order")
                         .HasColumnType("integer");
+
+                    b.Property<string>("ThumbnailUrl")
+                        .HasColumnType("text");
 
                     b.Property<string>("VideoUrl")
                         .HasMaxLength(512)
@@ -339,7 +345,7 @@ namespace Edufy.SqlServer.Migrations
                     b.ToTable("RefreshTokens", "gp_edufy");
                 });
 
-            modelBuilder.Entity("Edufy.Domain.Entities.SavedProgram", b =>
+            modelBuilder.Entity("Edufy.Domain.Entities.SavedLesson", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -347,7 +353,7 @@ namespace Edufy.SqlServer.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ProgramId")
+                    b.Property<int>("LessonId")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("SavedAt")
@@ -358,12 +364,12 @@ namespace Edufy.SqlServer.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProgramId");
+                    b.HasIndex("LessonId");
 
-                    b.HasIndex("UserId", "ProgramId")
+                    b.HasIndex("UserId", "LessonId")
                         .IsUnique();
 
-                    b.ToTable("SavedPrograms", "gp_edufy");
+                    b.ToTable("SavedLessons", "gp_edufy");
                 });
 
             modelBuilder.Entity("Edufy.Domain.Entities.User", b =>
@@ -638,21 +644,21 @@ namespace Edufy.SqlServer.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Edufy.Domain.Entities.SavedProgram", b =>
+            modelBuilder.Entity("Edufy.Domain.Entities.SavedLesson", b =>
                 {
-                    b.HasOne("Edufy.Domain.Entities.Program", "Program")
-                        .WithMany("SavedPrograms")
-                        .HasForeignKey("ProgramId")
+                    b.HasOne("Edufy.Domain.Entities.Lesson", "Lesson")
+                        .WithMany("SavedLessons")
+                        .HasForeignKey("LessonId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Edufy.Domain.Entities.User", "User")
-                        .WithMany("SavedPrograms")
+                        .WithMany("SavedLessons")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Program");
+                    b.Navigation("Lesson");
 
                     b.Navigation("User");
                 });
@@ -718,6 +724,11 @@ namespace Edufy.SqlServer.Migrations
                     b.Navigation("Programs");
                 });
 
+            modelBuilder.Entity("Edufy.Domain.Entities.Lesson", b =>
+                {
+                    b.Navigation("SavedLessons");
+                });
+
             modelBuilder.Entity("Edufy.Domain.Entities.Module", b =>
                 {
                     b.Navigation("Lessons");
@@ -728,15 +739,13 @@ namespace Edufy.SqlServer.Migrations
                     b.Navigation("Applications");
 
                     b.Navigation("Modules");
-
-                    b.Navigation("SavedPrograms");
                 });
 
             modelBuilder.Entity("Edufy.Domain.Entities.User", b =>
                 {
                     b.Navigation("Applications");
 
-                    b.Navigation("SavedPrograms");
+                    b.Navigation("SavedLessons");
                 });
 #pragma warning restore 612, 618
         }

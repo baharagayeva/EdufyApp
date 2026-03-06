@@ -13,8 +13,7 @@ public class HomeController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
     public async Task<IActionResult> Get(
-        [FromQuery] int popularTake = 5,
-        [FromQuery] int instructorTake = 4,
+        [FromQuery] GetHomeQueryRequest request,
         CancellationToken ct = default)
-        => (await mediator.Send(new GetHomeQueryRequest(), ct)).ToActionResult();
+        => (await mediator.Send(request, ct)).ToActionResult();
 }

@@ -22,12 +22,7 @@ public sealed class SmtpEmailSender(IOptions<SmtpOptions> opt) : IEmailSender
 
         using var client = new SmtpClient();
 
-        var secure = _opt.UseSsl
-            ? SecureSocketOptions.SslOnConnect
-            : SecureSocketOptions.StartTlsWhenAvailable;
-
-        await client.ConnectAsync(_opt.Host, _opt.Port, secure, ct);
-
+        await client.ConnectAsync(_opt.Host, _opt.Port, SecureSocketOptions.StartTls, ct);
         if (!string.IsNullOrWhiteSpace(_opt.Username))
             await client.AuthenticateAsync(_opt.Username, _opt.Password, ct);
 
