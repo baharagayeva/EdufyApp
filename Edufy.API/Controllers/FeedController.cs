@@ -16,4 +16,8 @@ public sealed class FeedController(IMediator mediator) : ControllerBase
         [FromQuery] GetFeedVideosQueryRequest request,
         CancellationToken ct = default)
         => (await mediator.Send(request, ct)).ToActionResult();
+    
+    [HttpGet("videos/{lessonId:int}")]
+    public async Task<IActionResult> GetVideoDetail(int lessonId, CancellationToken ct = default)
+        => (await mediator.Send(new GetLessonDetailQueryRequest(lessonId), ct)).ToActionResult();
 }
